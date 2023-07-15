@@ -1,18 +1,25 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import BoardLayout from '../styled-components/BoardLayout';
 import Cell from './cell';
+import { BoardPiece } from '../types/BoardPiece';
 
 type BoardProps = {
-  cells: string[];
+  player1: string;
+  player2: string;
 };
 
-const Board = () => {
+const Board = ({ player1, player2 }: BoardProps) => {
   const [cells, setCells] = useState<string[]>(Array<string>(9).fill(''));
+  const [nextPiece, setNextPiece] = useState(BoardPiece.X);
 
   const handleCellClick = (index: number): void => {
     setCells((cells) => {
-      return Object.assign([], cells, { [index]: 'X' });
+      return Object.assign([], cells, { [index]: nextPiece });
     });
+
+    setNextPiece((currentPiece) =>
+      currentPiece === BoardPiece.X ? BoardPiece.O : BoardPiece.X
+    );
   };
 
   return (
