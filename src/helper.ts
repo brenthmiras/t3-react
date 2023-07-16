@@ -23,3 +23,8 @@ export const calculateWinner = (squares: BoardPiece[]): BoardPiece | null => {
 export const pickOneOf = <T>(item1: T, item2: T) => {
   return Math.random() < 0.5 ? item1 : item2;
 };
+
+export const isBoardFull = (squares: BoardPiece[]): boolean => {
+  const emptySquares = squares.filter((piece) => piece === BoardPiece.EMPTY);
+  return !emptySquares.length;
+};

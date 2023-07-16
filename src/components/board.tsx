@@ -1,24 +1,25 @@
-import { useCallback, useEffect, useState } from 'react';
 import BoardLayout from '../styled-components/BoardLayout';
 import Cell from './cell';
-import { BoardPiece } from '../types/BoardPiece';
-import { calculateWinner } from '../helper';
 import useRound from '../hooks/useRound';
 import useCells from '../hooks/useCells';
+import { RoundResult } from '../types/RoundResult';
+import { RoundStatus } from '../types/RoundStatus';
 
 type BoardProps = {
   player1: string;
   player2: string;
+  onRoundComplete: (result: RoundResult) => void;
 };
 
-const Board = ({ player1, player2 }: BoardProps) => {
+const Board = ({ player1, player2, onRoundComplete }: BoardProps) => {
   const { cells, placePiece } = useCells();
 
-  const { winner, currentPlayer, nextPlayer } = useRound(
-    player1,
-    player2,
-    cells
-  );
+  const { winner, status, currentPlayer, nextPlayer } = useRound({
+    p1Name: player1,
+    p2Name: player2,
+    cells,
+    onComplete: onRoundComplete,
+  });
 
   const handleCellClick = (index: number): void => {
     if (!!winner) return;
@@ -28,21 +29,21 @@ const Board = ({ player1, player2 }: BoardProps) => {
 
   return (
     <>
-      {winner ? (
+      {status === RoundStatus.ONGOING ? (
+        <h2>{currentPlayer.user.name}'s Turn</h2>
+      ) : (
+        ''
+      )}
+      {status === RoundStatus.COMPLETED && winner ? (
         <h2>{winner.user.name} has won!</h2>
       ) : (
-        <h2>{currentPlayer.user.name}'s Turn</h2>
+        ''
       )}
+      {status === RoundStatus.COMPLETED && !winner ? <h2>It's a draw</h2> : ''}
       <BoardLayout>
-        <Cell value={cells[0]} onCellClick={() => handleCellClick(0)} />
-        <Cell value={cells[1]} onCellClick={() => handleCellClick(1)} />
-        <Cell value={cells[2]} onCellClick={() => handleCellClick(2)} />
-        <Cell value={cells[3]} onCellClick={() => handleCellClick(3)} />
-        <Cell value={cells[4]} onCellClick={() => handleCellClick(4)} />
-        <Cell value={cells[5]} onCellClick={() => handleCellClick(5)} />
-        <Cell value={cells[6]} onCellClick={() => handleCellClick(6)} />
-        <Cell value={cells[7]} onCellClick={() => handleCellClick(7)} />
-        <Cell value={cells[8]} onCellClick={() => handleCellClick(8)} />
+        {cells.map((cell, index) => (
+          <Cell value={cell} onCellClick={() => handleCellClick(index)} />
+        ))}
       </BoardLayout>
     </>
   );
