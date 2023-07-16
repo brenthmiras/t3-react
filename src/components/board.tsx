@@ -9,12 +9,26 @@ type BoardProps = {
   player1: string;
   player2: string;
   onRoundComplete: (result: RoundResult) => void;
+  onStop: () => void;
+  onContinue: () => void;
 };
 
-const Board = ({ player1, player2, onRoundComplete }: BoardProps) => {
-  const { cells, placePiece } = useCells();
+const Board = ({
+  player1,
+  player2,
+  onRoundComplete,
+  onStop,
+  onContinue,
+}: BoardProps) => {
+  const { cells, placePiece, reset: resetCells } = useCells();
 
-  const { winner, status, currentPlayer, nextPlayer } = useRound({
+  const {
+    winner,
+    status,
+    currentPlayer,
+    nextPlayer,
+    reset: resetRound,
+  } = useRound({
     p1Name: player1,
     p2Name: player2,
     cells,
@@ -25,6 +39,11 @@ const Board = ({ player1, player2, onRoundComplete }: BoardProps) => {
     if (!!winner) return;
     placePiece(currentPlayer.piece, index);
     nextPlayer();
+  };
+
+  const handleContinue = () => {
+    resetCells();
+    resetRound();
   };
 
   return (
@@ -40,6 +59,14 @@ const Board = ({ player1, player2, onRoundComplete }: BoardProps) => {
         ''
       )}
       {status === RoundStatus.COMPLETED && !winner ? <h2>It's a draw</h2> : ''}
+      {status === RoundStatus.COMPLETED ? (
+        <div>
+          <button onClick={onStop}>Stop</button>
+          <button onClick={() => handleContinue()}>Continue</button>
+        </div>
+      ) : (
+        ''
+      )}
       <BoardLayout>
         {cells.map((cell, index) => (
           <Cell

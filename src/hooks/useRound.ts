@@ -30,6 +30,12 @@ const useRound = ({ p1Name, p2Name, cells, onComplete }: RoundProps) => {
     });
   };
 
+  const reset = () => {
+    setCurrentPlayer(pickOneOf(player1, player2));
+    setWinner(undefined);
+    setStatus(RoundStatus.ONGOING);
+  };
+
   useEffect(() => {
     const winnerPiece = calculateWinner(cells);
 
@@ -72,6 +78,7 @@ const useRound = ({ p1Name, p2Name, cells, onComplete }: RoundProps) => {
     currentPlayer,
     setWinner,
     nextPlayer,
+    reset,
   };
 };
 

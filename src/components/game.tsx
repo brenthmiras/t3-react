@@ -17,6 +17,14 @@ const Game = () => {
     console.log(rounds);
   }, [rounds]);
 
+  const handleStop = () => {
+    alert('Game has stopped');
+  };
+
+  const handleContinue = () => {
+    alert('Continue game');
+  };
+
   return (
     <div>
       <h1>
@@ -26,6 +34,8 @@ const Game = () => {
         player1={player1}
         player2={player2}
         onRoundComplete={handleRoundComplete}
+        onStop={handleStop}
+        onContinue={handleContinue}
       />
     </div>
   );
