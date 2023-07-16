@@ -1,6 +1,6 @@
 import { BoardPiece } from './types/BoardPiece';
 
-export const calculateWinner = (squares: BoardPiece[]) => {
+export const calculateWinner = (squares: BoardPiece[]): BoardPiece | null => {
   const lines = [
     [0, 1, 2],
     [3, 4, 5],
@@ -18,4 +18,8 @@ export const calculateWinner = (squares: BoardPiece[]) => {
     }
   }
   return null;
+};
+
+export const pickOneOf = <T>(item1: T, item2: T) => {
+  return Math.random() < 0.5 ? item1 : item2;
 };

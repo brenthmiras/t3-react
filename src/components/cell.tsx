@@ -7,7 +7,7 @@ type CellProps = {
 
 const Cell = ({ onCellClick, value }: CellProps) => {
   return (
-    <CellButton disabled={!!value} onClick={(e) => onCellClick(e)}>
+    <CellButton disabled={!!value} onClick={() => onCellClick()}>
       {value}
     </CellButton>
   );

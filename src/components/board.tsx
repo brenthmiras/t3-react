@@ -3,6 +3,8 @@ import BoardLayout from '../styled-components/BoardLayout';
 import Cell from './cell';
 import { BoardPiece } from '../types/BoardPiece';
 import { calculateWinner } from '../helper';
+import useRound from '../hooks/useRound';
+import useCells from '../hooks/useCells';
 
 type BoardProps = {
   player1: string;
@@ -10,36 +12,27 @@ type BoardProps = {
 };
 
 const Board = ({ player1, player2 }: BoardProps) => {
-  const [cells, setCells] = useState(
-    Array<BoardPiece>(9).fill(BoardPiece.EMPTY)
+  const { cells, placePiece } = useCells();
+
+  const { winner, currentPlayer, nextPlayer } = useRound(
+    player1,
+    player2,
+    cells
   );
-  const [nextPiece, setNextPiece] = useState(BoardPiece.X);
 
-  const handleCellClick = useCallback(
-    (index: number): void => {
-      const updatedCells = Object.assign([], cells, { [index]: nextPiece });
-
-      /**
-       * Render the next piece to the board
-       */
-      setCells(updatedCells);
-
-      const winner = calculateWinner(updatedCells);
-
-      if (winner) {
-        alert('Winner is ' + winner);
-      }
-
-      setNextPiece((currentPiece) =>
-        currentPiece === BoardPiece.X ? BoardPiece.O : BoardPiece.X
-      );
-    },
-    [cells]
-  );
+  const handleCellClick = (index: number): void => {
+    if (!!winner) return;
+    placePiece(currentPlayer.piece, index);
+    nextPlayer();
+  };
 
   return (
     <>
-      <h2>{nextPiece}'s Turn</h2>
+      {winner ? (
+        <h2>{winner.user.name} has won!</h2>
+      ) : (
+        <h2>{currentPlayer.user.name}'s Turn</h2>
+      )}
       <BoardLayout>
         <Cell value={cells[0]} onCellClick={() => handleCellClick(0)} />
         <Cell value={cells[1]} onCellClick={() => handleCellClick(1)} />
