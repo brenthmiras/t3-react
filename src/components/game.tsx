@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Board from './board';
 import { RoundResult } from '../types/RoundResult';
 
@@ -6,9 +6,16 @@ const Game = () => {
   const player1 = 'John';
   const player2 = 'Kate';
 
+  const [rounds, setRounds] = useState<RoundResult[]>([]);
+
   const handleRoundComplete = (result: RoundResult) => {
-    console.log(result);
+    setRounds((rounds) => [...rounds, result]);
   };
+
+  useEffect(() => {
+    console.log('Rounds:');
+    console.log(rounds);
+  }, [rounds]);
 
   return (
     <div>
@@ -20,7 +27,6 @@ const Game = () => {
         player2={player2}
         onRoundComplete={handleRoundComplete}
       />
-      ;
     </div>
   );
 };

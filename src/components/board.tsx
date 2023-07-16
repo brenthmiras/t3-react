@@ -42,7 +42,11 @@ const Board = ({ player1, player2, onRoundComplete }: BoardProps) => {
       {status === RoundStatus.COMPLETED && !winner ? <h2>It's a draw</h2> : ''}
       <BoardLayout>
         {cells.map((cell, index) => (
-          <Cell value={cell} onCellClick={() => handleCellClick(index)} />
+          <Cell
+            key={index}
+            value={cell}
+            onCellClick={() => handleCellClick(index)}
+          />
         ))}
       </BoardLayout>
     </>
