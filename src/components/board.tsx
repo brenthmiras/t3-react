@@ -50,9 +50,9 @@ const Board = ({
   return (
     <div>
       {status === RoundStatus.ONGOING ? (
-        <h2>
+        <h1>
           {currentPlayer.user.name}'s Turn - {currentPlayer.piece}
-        </h2>
+        </h1>
       ) : (
         ''
       )}

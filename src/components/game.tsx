@@ -34,13 +34,13 @@ const Game = () => {
   };
 
   return (
-    <div className="row justify-content-center">
+    <div className="row">
       <div className="col-md-4">
         <h1>Round {rounds.length + 1}</h1>
-        <ScoreLayout>
-          <ScoreCard score={player1Score} />
-          <ScoreCard score={player2Score} />
-        </ScoreLayout>
+        <ScoreCard score={player1Score} />
+        <ScoreCard score={player2Score} />
+      </div>
+      <div className="col-md-6">
         <Board
           player1={player1}
           player2={player2}

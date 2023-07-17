@@ -8,7 +8,7 @@ type CellProps = {
 const Cell = ({ onCellClick, value }: CellProps) => {
   return (
     <CellButton
-      className="btn btn-outline-secondary"
+      className="btn btn-secondary"
       disabled={!!value}
       onClick={() => onCellClick()}
     >
