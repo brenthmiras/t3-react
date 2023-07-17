@@ -8,12 +8,16 @@ type ScoreCardProps = {
 
 const ScoreCard = ({ score }: ScoreCardProps) => {
   return (
-    <ul>
-      <li>Name: {score.name}</li>
-      <li>Wins: {score.wins}</li>
-      <li>Loses: {score.loses}</li>
-      <li>Draws: {score.draws}</li>
-    </ul>
+    <div className="card w-100 me-2">
+      <div className="card-header">{score.name}</div>
+      <div className="card-body">
+        <ul>
+          <li>Wins: {score.wins}</li>
+          <li>Loses: {score.loses}</li>
+          <li>Draws: {score.draws}</li>
+        </ul>
+      </div>
+    </div>
   );
 };
 

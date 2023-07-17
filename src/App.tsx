@@ -6,7 +6,9 @@ import Game from './components/game';
 function App() {
   return (
     <div className="App">
-      <Game />
+      <div className="container">
+        <Game />
+      </div>
     </div>
   );
 }

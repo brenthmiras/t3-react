@@ -34,21 +34,21 @@ const Game = () => {
   };
 
   return (
-    <div>
-      <h1>
-        {player1.user.name} vs {player2.user.name}
-      </h1>
-      <ScoreLayout>
-        <ScoreCard score={player1Score} />
-        <ScoreCard score={player2Score} />
-      </ScoreLayout>
-      <Board
-        player1={player1}
-        player2={player2}
-        onRoundComplete={handleRoundComplete}
-        onStop={handleStop}
-        onContinue={handleContinue}
-      />
+    <div className="row justify-content-center">
+      <div className="col-md-4">
+        <h1>Round {rounds.length + 1}</h1>
+        <ScoreLayout>
+          <ScoreCard score={player1Score} />
+          <ScoreCard score={player2Score} />
+        </ScoreLayout>
+        <Board
+          player1={player1}
+          player2={player2}
+          onRoundComplete={handleRoundComplete}
+          onStop={handleStop}
+          onContinue={handleContinue}
+        />
+      </div>
     </div>
   );
 };

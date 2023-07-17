@@ -63,9 +63,13 @@ const Board = ({
       )}
       {status === RoundStatus.COMPLETED && !winner ? <h2>It's a draw</h2> : ''}
       {status === RoundStatus.COMPLETED ? (
-        <div>
-          <button onClick={onStop}>Stop</button>
-          <button onClick={() => handleContinue()}>Continue</button>
+        <div className="p-2">
+          <button className="btn btn-outline-primary" onClick={onStop}>
+            Stop
+          </button>
+          <button className="btn btn-primary" onClick={() => handleContinue()}>
+            Continue
+          </button>
         </div>
       ) : (
         ''
