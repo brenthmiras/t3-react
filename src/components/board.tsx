@@ -4,10 +4,11 @@ import useRound from '../hooks/useRound';
 import useCells from '../hooks/useCells';
 import { RoundResult } from '../types/RoundResult';
 import { RoundStatus } from '../types/RoundStatus';
+import { Player } from '../types/Player';
 
 type BoardProps = {
-  player1: string;
-  player2: string;
+  player1: Player;
+  player2: Player;
   onRoundComplete: (result: RoundResult) => void;
   onStop: () => void;
   onContinue: () => void;
@@ -29,8 +30,8 @@ const Board = ({
     nextPlayer,
     reset: resetRound,
   } = useRound({
-    p1Name: player1,
-    p2Name: player2,
+    player1,
+    player2,
     cells,
     onComplete: onRoundComplete,
   });
@@ -47,9 +48,11 @@ const Board = ({
   };
 
   return (
-    <>
+    <div>
       {status === RoundStatus.ONGOING ? (
-        <h2>{currentPlayer.user.name}'s Turn</h2>
+        <h2>
+          {currentPlayer.user.name}'s Turn - {currentPlayer.piece}
+        </h2>
       ) : (
         ''
       )}
@@ -76,7 +79,7 @@ const Board = ({
           />
         ))}
       </BoardLayout>
-    </>
+    </div>
   );
 };
 

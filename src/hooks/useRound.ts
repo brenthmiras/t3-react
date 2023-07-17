@@ -7,16 +7,13 @@ import { isBoardFull, calculateWinner, pickOneOf } from '../helper';
 import { RoundResult } from '../types/RoundResult';
 
 type RoundProps = {
-  p1Name: string;
-  p2Name: string;
+  player1: Player;
+  player2: Player;
   cells: BoardPiece[];
   onComplete: (result: RoundResult) => void;
 };
 
-const useRound = ({ p1Name, p2Name, cells, onComplete }: RoundProps) => {
-  const player1 = usePlayer(p1Name, BoardPiece.X);
-  const player2 = usePlayer(p2Name, BoardPiece.O);
-
+const useRound = ({ player1, player2, cells, onComplete }: RoundProps) => {
   const [currentPlayer, setCurrentPlayer] = useState(
     pickOneOf(player1, player2)
   );
@@ -54,7 +51,7 @@ const useRound = ({ p1Name, p2Name, cells, onComplete }: RoundProps) => {
       onComplete({
         player1,
         player2,
-        winner: newWinner,
+        winner: winnerPiece,
         status: RoundStatus.COMPLETED,
       });
     }
